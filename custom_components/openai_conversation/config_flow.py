@@ -13,6 +13,7 @@ import voluptuous as vol
 
 from homeassistant import config_entries
 from homeassistant.const import CONF_API_KEY
+from homeassistant.const import CONF_API_BASE
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.helpers.selector import (
@@ -59,6 +60,7 @@ async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> None:
 
     Data has the keys from STEP_USER_DATA_SCHEMA with values provided by the user.
     """
+    openai.api_base = f'http://{data[CONF_API_BASE]}/v1'
     openai.api_key = data[CONF_API_KEY]
     await hass.async_add_executor_job(partial(openai.Engine.list, request_timeout=10))
 

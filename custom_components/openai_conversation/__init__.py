@@ -11,7 +11,7 @@ import voluptuous as vol
 
 from homeassistant.components import conversation
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_API_KEY, MATCH_ALL
+from homeassistant.const import CONF_API_KEY, CONF_DOMAIN, MATCH_ALL
 from homeassistant.core import (
     HomeAssistant,
     ServiceCall,
@@ -90,7 +90,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         await hass.async_add_executor_job(
             partial(
                 openai.Engine.list,
-                api_key=entry.data[CONF_API_KEY],
+                api_key=entry.data[API_KEY],
                 request_timeout=10,
             )
         )
@@ -100,7 +100,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     except error.OpenAIError as err:
         raise ConfigEntryNotReady(err) from err
 
-    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = entry.data[CONF_API_KEY]
+    hass.data.setdefault(DOMAIN, {})[entry.entry_id] = entry.data[API_KEY]
 
     conversation.async_set_agent(hass, entry, OpenAIAgent(hass, entry))
     return True
@@ -131,11 +131,11 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
         self, user_input: conversation.ConversationInput
     ) -> conversation.ConversationResult:
         """Process a sentence."""
-        raw_prompt = self.entry.options.get(CONF_PROMPT, DEFAULT_PROMPT)
-        model = self.entry.options.get(CONF_CHAT_MODEL, DEFAULT_CHAT_MODEL)
-        max_tokens = self.entry.options.get(CONF_MAX_TOKENS, DEFAULT_MAX_TOKENS)
-        top_p = self.entry.options.get(CONF_TOP_P, DEFAULT_TOP_P)
-        temperature = self.entry.options.get(CONF_TEMPERATURE, DEFAULT_TEMPERATURE)
+        raw_prompt = self.entry.options.get(PROMPT, DEFAULT_PROMPT)
+        model = self.entry.options.get(CHAT_MODEL, DEFAULT_CHAT_MODEL)
+        max_tokens = self.entry.options.get(MAX_TOKENS, DEFAULT_MAX_TOKENS)
+        top_p = self.entry.options.get(TOP_P, DEFAULT_TOP_P)
+        temperature = self.entry.options.get(TEMPERATURE, DEFAULT_TEMPERATURE)
 
         if user_input.conversation_id in self.history:
             conversation_id = user_input.conversation_id
@@ -162,7 +162,7 @@ class OpenAIAgent(conversation.AbstractConversationAgent):
 
         try:
             result = await openai.ChatCompletion.acreate(
-                api_key=self.entry.data[CONF_API_KEY],
+                api_key=self.entry.data[API_KEY],
                 model=model,
                 messages=messages,
                 max_tokens=max_tokens,

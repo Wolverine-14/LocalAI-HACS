@@ -1,4 +1,4 @@
-# Node-RED Companion Integration
+# LocalAI Conversation Integration
 
 [![hacs][hacsbadge]][hacs] [![releasebadge]][release] [![Build Status][buildstatus-shield]][buildstatus-link] [![License][license-shield]](LICENSE.md)
 
@@ -8,17 +8,7 @@ _Companion Component to [node-red-contrib-home-assistant-websocket](https://gith
 
 ## Features
 
-- Create and update entities from Node-RED
-  - binary sensor
-  - button
-  - number
-  - select
-  - sensor
-  - switch
-  - text
-- Disable and enable Node-RED flows from Home Assistant UI
-- Create Home Assistant webhooks and handle them in Node-RED
-- Use Device triggers and action from Node-RED
+- 
 
 ## Minimum Requirements
 
@@ -32,10 +22,10 @@ _Companion Component to [node-red-contrib-home-assistant-websocket](https://gith
 Install via [HACS](https://hacs.xyz) (Home Assistant Community Store)
 
 1. Go to HACS -> Integrations -> "+ Explore & Download Repos"
-1. Find "Node-RED Companion".
+1. Find "LocalAI Conversation".
 1. Open the search result and click "Download this Repository with HACS".
 1. Refresh your browser window (bug in HA where it doesn't update the integration list after a reboot)
-1. In the Home Assistant UI go to "Configuration" -> "Integrations" click "+" and search for "Node-RED" [![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=nodered)
+1. In the Home Assistant UI go to "Configuration" -> "Integrations" click "+" and search for "LocalAI Conversation" [![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=nodered)
 
 ### Manual
 
